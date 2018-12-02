@@ -1,0 +1,111 @@
+body{
+	height: 100%;
+	background: url(../img/background.png) no-repeat,
+				url(../img/noise.png);
+	background-attachment: fixed;
+}
+
+nav.navbar-transparent{
+	background: rgba(102, 102, 153,0.6);
+	padding: 5px 0;
+	height: 50px;
+	
+}
+
+.navbar-light .navbar-nav .nav-link{
+	color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover{
+	color: #9bf0e1;
+}
+
+.navbar-light .navbar-toggler{
+	color: rgba(255,255,255,0.5);
+	border-color: white;
+}
+
+#contentSection{
+	border: solid 1px red;
+	width: 1210px;
+	height: 830px;
+	margin: 60px auto 13px;
+}
+
+#mapid {
+	border-radius: 5px;
+	height: 825px;
+	width: 1208px;
+	position: absolute;
+	z-index: 2;
+	transition: 3s all;
+}
+
+#mapid:hover{
+	height: 790px;
+	transition: all 3s;
+}
+
+#tabsContent{
+	position: absolute; ;
+	margin-top: 330px;
+	height: 570px;
+	width: 1208px;
+}
+
+#myTabContent{
+	height: 450px;
+}
+
+#weather{
+	color: black;
+	height: 450px;
+}
+
+.weatherDetailsImg textarea , .cityInformation textarea{
+	margin-top: 8px;
+	margin-bottom: 16px;
+}
+
+.weatherDetails input{
+	margin-top: 8px;
+	margin-bottom: 16px;
+	width: 250px;
+}
+.weatherDetails, .cityInformation hr{
+	margin:0, 10px, 20px,10px;
+}
+
+.cityInformation input{
+	margin-top: 8px;
+	margin-bottom: 16px;
+	width: 442px;
+}
+
+.weatherDetails, .cityInformation, .weatherDetailsImg{
+	padding: 16px;	
+	height: 430px;
+	margin:8px;
+	border: solid 1px #b0bec5;
+	border-radius: 5px;
+}
+
+
+.row legend{
+	margin-bottom: 0px;
+}
+
+footer{
+	position: fixed;
+   left: 0;
+   bottom: 0;
+   padding: 10px 0;
+   width: 100%;
+   background-color: #8585ad;
+   text-align: center;
+}
+footer h4{
+	color: #FFF;
+	font-size: 0.8em;
+	text-transform: uppercase;
+}

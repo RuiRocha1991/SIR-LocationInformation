@@ -1,0 +1,76 @@
+body{
+	height: 100%;
+	background: url(../img/background.png) no-repeat,
+				url(../img/noise.png);
+	background-attachment: fixed;
+}
+
+nav.navbar-transparent{
+	background: rgba(0,0,0,0.6);
+	padding: 10px 0;
+	height: 70px;
+	
+}
+
+.navbar-light .navbar-nav .nav-link{
+	color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover{
+	color: #9bf0e1;
+}
+
+.navbar-light .navbar-toggler{
+	color: rgba(255,255,255,0.5);
+	border-color: white;
+}
+
+#contentSection{
+	width: 1210px;
+	height: 790px;
+	margin: 75px auto 13px;
+}
+
+#map {
+	border-radius: 10px;
+	height: 200px;
+	width: 1200px;
+	background: red;
+	position: absolute;
+	z-index: 2;
+	transition: 3s all 3s;
+}
+
+#map:hover{
+	height: 790px;
+	transition: all 3s;
+}
+
+#tabsContent{
+	background: green;
+	position: absolute; ;
+	margin-top: 210px;
+	height: 570px;
+	width: 1200px;
+}
+
+.card-body{
+	height: 520px;
+}
+
+
+footer{
+	background: #000;
+	padding: 12px 0px;
+	position: relative;
+}
+footer h4{
+	color: #919496;
+	font-size: 0.8em;
+	text-transform: uppercase;
+}
+footer h6{
+	color: #919496;
+	font-size: 0.8em;
+	text-transform: uppercase;
+}
