@@ -1,6 +1,7 @@
 var mymap;
 var marker;
 var popup;
+var pos;
 // initialize the map
 
 
@@ -21,7 +22,7 @@ function initMap() {
 	}
 	geocoder = new google.maps.Geocoder;
 	 if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position) {
+		navigator.geolocation.getCurrentPosition(function(position){
 	        pos = {
 	        	lat: position.coords.latitude,
 	          	lng: position.coords.longitude          
@@ -35,13 +36,11 @@ function initMap() {
       handleLocationError(false);
     }
     $("#mapid").css("height","300px");
-
     $('#mapid').hover(function(){
     	$('#mapid').css("height","825px");
 		},function(){
 		    $('#mapid').css("height","300px");
 		});
-
 }
 
 function handleLocationError(browserHasGeolocation) {
@@ -56,7 +55,7 @@ function addMarker(location) {
 }
 
 function getWeather(location){
-	fetch("http://localhost/01-Escola/SIR/TrabalhoPratico1/php/darkyProxy.php?lat="+location.lat+"&lng="+location.lng)
+	fetch("http://localhost/01-Escola/SIR/Trabalhos%20Praticos/TrabalhoPratico1/php/darkyProxy.php?lat="+location.lat+"&lng="+location.lng)
 	    .then(function(resp) {
 	        return resp.json();
 	    })
@@ -75,7 +74,6 @@ function getNameCity(location) {
       	document.getElementById('cityName').value="";
       	let name="";
         if (results[0]) {
-        	console.log(results);
         	for(let i=0; i<results.length; i++)
         		for(let x=0; x<results[i].types.length;x++)
         			if(results[i].formatted_address.indexOf("USA")<0){

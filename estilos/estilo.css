@@ -26,7 +26,6 @@ nav.navbar-transparent{
 }
 
 #contentSection{
-	border: solid 1px red;
 	width: 1210px;
 	height: 830px;
 	margin: 60px auto 13px;
@@ -65,9 +64,12 @@ nav.navbar-transparent{
 .weatherDetailsImg textarea , .cityInformation textarea{
 	margin-top: 8px;
 	margin-bottom: 16px;
+	width: 100%;
+	padding-left: 8px;
 }
 
 .weatherDetails input{
+	padding-left: 8px;
 	margin-top: 8px;
 	margin-bottom: 16px;
 	width: 250px;
@@ -77,6 +79,7 @@ nav.navbar-transparent{
 }
 
 .cityInformation input{
+	padding-left: 8px;
 	margin-top: 8px;
 	margin-bottom: 16px;
 	width: 442px;
