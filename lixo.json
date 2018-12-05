@@ -1,0 +1,17 @@
+value : {
+    cloudCover: 0.98 *100
+    dewPoint: 10.61ºC
+    humidity: 0.9 *100
+
+    precipIntensity: 0.0025
+    precipIntensityMax: 0.0051
+    precipProbability: 0.08
+    pressure: 1021.93 mbar
+
+    temperatureMax: 16.05
+    temperatureMin: 10.74
+    uvIndex: 2
+    visibility: 16.09
+    windGust: 4.62
+    windSpeed: 2.42
+}
