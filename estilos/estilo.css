@@ -40,7 +40,7 @@ nav.navbar-transparent{
 	transition: 1.5s all;
 }
 
-#mapid:hover{
+#mapid :hover{
 	height: 825px;
 	transition: all 1.5s;
 }
