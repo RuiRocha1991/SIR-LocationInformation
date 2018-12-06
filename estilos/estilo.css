@@ -36,13 +36,16 @@ nav.navbar-transparent{
 	height: 825px;
 	width: 1208px;
 	position: absolute;
-	z-index: 2;
+	z-index: 1;
 	transition: 1.5s all;
 }
 
 #mapid :hover{
 	height: 825px;
 	transition: all 1.5s;
+}
+#mapid input:hover{
+	height: 25px;
 }
 
 #tabContent{

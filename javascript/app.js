@@ -38,7 +38,6 @@ function getNameCity(location) {
 	}
 	var dat;
 	var date = new Date();
-
 	let jsonComplete={};
 	var jsonRows=[]
 	jsonComplete.data=jsonRows;
@@ -79,7 +78,6 @@ function createWeatherTo8Days(data) {
   }
 
 function formatDate(date) {
-  
 	var day = date.getDate();
 	var monthIndex = date.getMonth();
 	var year = date.getFullYear();
@@ -91,6 +89,5 @@ function formatDate(date) {
 		weekday[4] = "Thursday";
 		weekday[5] = "Friday";
 		weekday[6] = "Saturday";
-  
 	return weekday[date.getDay()] +', '+day + '/' + (monthIndex+1) + '/' + year;
 }

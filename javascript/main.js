@@ -29,7 +29,7 @@ function initMap() {
 	      });
     } else {
       handleLocationError(false);
-    }
+	}
     $("#mapid").css("height","290px");
     $('#mapid').hover(function(){
     	$('#mapid').css("height","835px");
@@ -47,7 +47,7 @@ function addMarker(location) {
 		mymap.removeLayer(marker);
 	getWeather(location);
 	marker = L.marker(location).addTo(mymap);
-	//getPlaces(location);
+	getPlaces(location);
 }
 
 
@@ -55,7 +55,7 @@ function getPlaces(location){
 	let lat=location.lat;
 	let lng=location.lng;
 	let type="food";
-	fetch("http://localhost/01-Escola/SIR/Trabalhos%20Praticos/TrabalhoPratico1/php/test.php?lat="+lat+"&lng="+lng+"&type="+type)
+	fetch("php/placesProxy.php?lat="+lat+"&lng="+lng+"&type="+type)
 		.then(function(resp){
 			return resp.json();
 		})
@@ -68,7 +68,7 @@ function getPlaces(location){
 }
 
 function getWeather(location){
-	fetch("http://localhost/01-Escola/SIR/Trabalhos%20Praticos/TrabalhoPratico1/php/darkyProxy.php?lat="+location.lat+"&lng="+location.lng)
+	fetch("php/darkyProxy.php?lat="+location.lat+"&lng="+location.lng)
 	    .then(function(resp) {
 	        return resp.json();
 	    })
@@ -82,23 +82,19 @@ function getWeather(location){
 	    });
 }
 
-
-
 function getDetailsPlaceFromId(places){
 	for (let i = 0; i < places.length; i++) {
 		console.log(places[i].place_id);
-		$.ajax({
-			url:"https://maps.googleapis.com/maps/api/place/details/json?placeid="+places[i].place_id+"&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ",
-			method: 'GET',
-			dataType:'jsonp',
-			success:function(data){
-				console.log(data);
-			},
-			error: function (errorMessage) {
-		  		console.log("Erro: "+errorMessage);
-			}
-
-		})
+		fetch("php/placesIdProxy.php?place="+places[i].place_id)
+	    .then(function(resp) {
+	        return resp.json();
+	    })
+	    .then(function(data) {
+			console.log(data);
+	    })
+	    .catch(function (error) {
+	        console.log(error.message);
+	    });
 	}
 }
 
@@ -123,7 +119,6 @@ function getInfoCity(cityName){
 		method: 'GET',
 		dataType: 'jsonp',
 		success: function (data) {
-		 	$( "#descriptionCity" ).text("");
 		 	$( "#descriptionCity" ).text( data.query.pages[Object.keys(data.query.pages)].extract );
 		},
 		error: function (errorMessage) {
