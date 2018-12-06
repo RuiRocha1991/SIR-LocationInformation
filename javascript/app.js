@@ -1,35 +1,3 @@
-function getNameCity(location) {
-    geocoder.geocode({'location': location}, function(results, status) {
-  	if (status === 'OK') {
-      	let name="";
-        if (results[0]) {
-        	for(let i=0; i<results.length; i++)
-        		for(let x=0; x<results[i].types.length;x++)
-        			if(results[i].formatted_address.indexOf("USA")<0){
-        				if(results[i].types[x]=="administrative_area_level_2"){
-        					if(results[i].formatted_address.indexOf('Brazil')>0){
-        						for(let y=0; y<results[i].formatted_address.length; y++){
-        							if(results[i].formatted_address[y] == '-')
-        								break;
-        							name+=results[i].formatted_address[y];
-        						}
-        					}else{
-        						name=results[i].formatted_address;
-        					}
-	        				getInfoCity(name); 
-        				}
-        			}else
-        				if(results[i].types[x]=="administrative_area_level_1"){
-	        				getInfoCity(results[i].formatted_address);  
-    					}	
-        } else 
-          window.alert('No results found');
-	} else 
-	window.alert('Geocoder failed due to: ' + status);
-    }); 
- }
-
-
  function convertWeatherJsonToDailyJson(data){
 	Date.prototype.addDays = function(days) {
 		var date = new Date(this.valueOf());
@@ -41,10 +9,8 @@ function getNameCity(location) {
 	let jsonComplete={};
 	var jsonRows=[]
 	jsonComplete.data=jsonRows;
-
 	for(let i=0; i<data.daily.data.length; i++){
 		dat= date.addDays(i);
-
 		object={
 			"day": formatDate(dat),
 			"icon": "https://darksky.net/images/weather-icons/"+data.daily.data[i]['icon']+".png",
@@ -58,10 +24,7 @@ function getNameCity(location) {
 			"humidity": data.daily.data[i]['humidity']*100+'%',
 			"visibility": data.daily.data[i]['visibility']+'Km'
 		}
-
 		jsonComplete.data.push(object);
-
-
 	}
 	createWeatherTo8Days(jsonComplete);
 }
@@ -90,4 +53,35 @@ function formatDate(date) {
 		weekday[5] = "Friday";
 		weekday[6] = "Saturday";
 	return weekday[date.getDay()] +', '+day + '/' + (monthIndex+1) + '/' + year;
+}
+
+function getNameCity(name){
+	let city='';
+	for(let i=0; i<name.length;i++){
+		if(name[i] == ',')
+			break;
+		city+=name[i];
+	}
+	return city;
+}
+
+function getCountry(name){
+	var countryInverse='';
+	var country='';
+	let length=name.length;
+	while(length>0 && name[length]!=','){
+		countryInverse+=name[length-1];
+		length--;
+	}
+	length=countryInverse.length;
+	while(length>0){
+		country+=countryInverse[length-1];
+		length--;
+	}
+	return country;
+}
+
+function fillCardsPlaces(data){
+	console.log("dados: "+data[0].result.formatted_phone_number);
+	$('#carouselContentID2').append('<div class="carousel-item  active "><div class="row d-flex justify-content-center"><div class="card shadow-lg p-3 bg-white rounded m-3" style="width:350px;" ><div class="view overlay"><img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2821%29.jpg" alt="Card image cap" height="200px"></div><div class="card-body elegant-color white-text rounded-bottom"><h4 class="card-title">'+data[0].result.name+'</h4><hr class="hr-light"><p class="card-text white-text mb-4">Some quick example text to build on the card title and make up the bulk of the cards content.</p></div></div></div>');
 }
