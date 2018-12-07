@@ -52,15 +52,15 @@ function addMarker(location) {
 	getPlaces(location);
 }
 
-function getWeather(location){
+function  getWeather(location){
 	fetch("php/darkyProxy.php?lat="+location.lat+"&lng="+location.lng)
 	    .then(function(resp) {
 	        return resp.json();
 	    })
-	    .then(function(data) {
+	    .then( function(data) {
 			setInfoResult(data);
 			convertWeatherJsonToDailyJson(data);
-	        getCity(location);
+			getCity(location);
 	    })
 	    .catch(function (error) {
 	        console.log(error.message);
@@ -84,12 +84,12 @@ function getCity(location) {
         						}
         					}else{
         						name=results[i].formatted_address;
-        					}
-	        				getInfoCity(name); 
+							}
+	        				getInfoCity( name); 
         				}
         			}else
         				if(results[i].types[x]=="administrative_area_level_1"){
-	        				getInfoCity(results[i].formatted_address);  
+	        				getInfoCity( results[i].formatted_address);  
     					}	
         } else 
           window.alert('No results found');
@@ -97,6 +97,9 @@ function getCity(location) {
 	window.alert('Geocoder failed due to: ' + status);
     }); 
  }
+
+
+
 
 function getPlaces(location){
 	let type="museum";
@@ -113,21 +116,20 @@ function getPlaces(location){
 }
 
 function getDetailsPlaceFromId(places){
-	//for (let i = 0; i < places.length; i++) {
+	for (let i = 0; i < places.length; i++) {
 		$.ajax({
-			url: 'php/placesIdProxy.php?place='+places[0].place_id,
+			url: 'php/placesIdProxy.php?place='+places[i].place_id,
 			method: 'GET',
 			dataType: 'json',
 			success: function (data) {
-				console.log(data);
-				places[0]=data;
-				fillCardsPlaces(places);
+				places[i]=data;
+				fillCardsPlaces(data);
 			},
 			error: function (errorMessage) {
 				alert(errorMessage);
 			}
 		});
-	//}
+	}
 	
 }
 

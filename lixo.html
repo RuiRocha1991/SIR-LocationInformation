@@ -1,53 +1,40 @@
 <!DOCTYPE html>
 <html>
-        <head>
-            <title>Bootstrap Coupons</title>
-
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        </head>
+  <head>
+      <title>Bootstrap Coupons</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+   <style>
+       #lixo{
+          width: 1000px;
+          height: 500px;
+          overflow: auto;
+          overflow-y: hidden;
+          white-space: nowrap;
+       }
       
-    <body>
-
-
-        <div class="container">
-            <div class="row d-flex justify-content-center">
-                    <!-- Card Dark -->
-            <div class="card shadow-lg p-3 bg-white rounded" style="width:400px;">
-
-        <!-- Card image -->
-        <div class="view overlay">
-          <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2821%29.jpg" alt="Card image cap">
-          <a>
-            <div class="mask rgba-white-slight"></div>
-          </a>
-        </div>
+    </style>
+  
+  
+    </head>
       
-        <!-- Card content -->
-        <div class="card-body elegant-color white-text rounded-bottom">
-      
-          <!-- Social shares button -->
-          <a class="activator waves-effect mr-4"><i class="fa fa-share-alt white-text"></i></a>
-          <!-- Title -->
-          <h4 class="card-title">Card title</h4>
-          <hr class="hr-light">
-          <!-- Text -->
-          <p class="card-text white-text mb-4">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <!-- Link -->
-          <a href="#!" class="white-text d-flex justify-content-end"><h5>Read more <i class="fa fa-angle-double-right"></i></h5></a>
-      
-        </div>
-      
-      </div>      
-            </div>
-        </div>
+  <body>
+      <div id="lixo" >
+          
+         
+        
+      </div>
+  </body>
+ <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
+ <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-
-</body>
-<!-- JavaScript (Opcional) -->
-<script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
-
+<script>
+ $(document).ready( function(){
+    for(var i=0; i<10;i++){
+      $('#lixo').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block" ><div class="view overlay"><img class="card-img-top" src="img/noise.png" alt="Card image cap" height="200px"></div><div class="card-body elegant-color white-text rounded-bottom"><h4 class="card-title">um texto aqui</h4><hr class="hr-light"><p class="card-text white-text mb-4">'+i+'</p></div></div>');
+    }
+  })
+</script>
 
 </html>

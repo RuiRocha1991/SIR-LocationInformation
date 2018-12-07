@@ -31,10 +31,10 @@
 
 
 function createWeatherTo8Days(data) {
-	var template = document.getElementById("carouselTemplate").innerHTML;
+	var template = document.getElementById("carouselTemplateWeatherWeek").innerHTML;
 	Mustache.parse(template);   // optional, speeds up future uses
 	var rendered = Mustache.render(template, data);
-	var membercontent = document.getElementById("carouselContentID");
+	var membercontent = document.getElementById("carouselContentIDWeatherWeek");
 	membercontent.innerHTML=rendered; 
 	var t =document.getElementsByClassName("carousel-item");
 	$(t[0]).toggleClass('active');    
@@ -82,6 +82,9 @@ function getCountry(name){
 }
 
 function fillCardsPlaces(data){
-	console.log("dados: "+data[0].result.formatted_phone_number);
-	$('#carouselContentID2').append('<div class="carousel-item  active "><div class="row d-flex justify-content-center"><div class="card shadow-lg p-3 bg-white rounded m-3" style="width:350px;" ><div class="view overlay"><img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2821%29.jpg" alt="Card image cap" height="200px"></div><div class="card-body elegant-color white-text rounded-bottom"><h4 class="card-title">'+data[0].result.name+'</h4><hr class="hr-light"><p class="card-text white-text mb-4">Some quick example text to build on the card title and make up the bulk of the cards content.</p></div></div></div>');
+	console.log(data);
+	var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
+	
+	$('#places').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block" style="height:430px;" ><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="200px"></div><div class="card-body elegant-color white-text rounded-bottom"><h4 class="card-title">'+data.result.name+'</h4><hr class="hr-light"><p class="card-text white-text text-md-left ">'+data.result.vicinity+'</p></div></div>');
+
 }
