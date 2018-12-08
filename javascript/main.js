@@ -32,11 +32,11 @@ function initMap() {
     } else {
       handleLocationError(false);
 	}
-    $("#mapid").css("height","290px");
+    $("#mapid").css("height","250px");
     $('#mapid').hover(function(){
     	$('#mapid').css("height","835px");
 		},function(){
-		    $('#mapid').css("height","290px");
+		    $('#mapid').css("height","250px");
 		});
 }
 
@@ -98,9 +98,6 @@ function getCity(location) {
     }); 
  }
 
-
-
-
 function getPlaces(location){
 	let type="museum";
 	fetch("php/placesProxy.php?lat="+location.lat+"&lng="+location.lng+"&type="+type)
@@ -116,13 +113,13 @@ function getPlaces(location){
 }
 
 function getDetailsPlaceFromId(places){
+	$('#places .card').remove();
 	for (let i = 0; i < places.length; i++) {
 		$.ajax({
 			url: 'php/placesIdProxy.php?place='+places[i].place_id,
 			method: 'GET',
 			dataType: 'json',
 			success: function (data) {
-				places[i]=data;
 				fillCardsPlaces(data);
 			},
 			error: function (errorMessage) {
@@ -130,7 +127,6 @@ function getDetailsPlaceFromId(places){
 			}
 		});
 	}
-	
 }
 
 function getInfoCity(name){ 

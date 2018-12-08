@@ -44,14 +44,12 @@ nav.navbar-transparent{
 	height: 825px;
 	transition: all 1.5s;
 }
-#mapid input:hover{
-	height: 25px;
-}
+
 
 #tabContent{
 	background-color: #FFF;
 	position: absolute; ;
-	margin-top: 310px;
+	margin-top: 270px;
 	width: 1208px;
 	border-radius: 5px;
 }
@@ -132,11 +130,28 @@ input:disabled, textarea:disabled{
 }
 
 #places{
-	height: 480px;
+	height: 510px;
+	white-space: nowrap;
 	overflow: auto;
 	overflow-y: hidden;
 	overflow-x: scroll;
-    white-space: nowrap;
+
+}
+
+.cardPlaceDetails{
+	height:93%; 
+	transform: scale(1);
+	transition: 0.4s ease;
+	white-space: normal;
+	vertical-align: top;
+}
+
+
+
+.cardPlaceDetails:hover{
+	cursor: -webkit-grab;
+	transform: scale(1.05);
+	transition: 0.4s ease;
 }
 
 footer{
@@ -151,6 +166,6 @@ footer{
 footer h4{
 	color: #FFF;
 	font-size: 0.8em;
-	text-transform: uppercase;
+	text-transform: uppercase;	
 }
 

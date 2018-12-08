@@ -82,9 +82,9 @@ function getCountry(name){
 }
 
 function fillCardsPlaces(data){
-	console.log(data);
-	var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
-	
-	$('#places').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block" style="height:430px;" ><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="200px"></div><div class="card-body elegant-color white-text rounded-bottom"><h4 class="card-title">'+data.result.name+'</h4><hr class="hr-light"><p class="card-text white-text text-md-left ">'+data.result.vicinity+'</p></div></div>');
+	if(data.result.photos!==undefined && data.result.opening_hours!==undefined){
+		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
+		$('#places').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails "><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom" style="height:100%"; ><h6 class="card-title teste">'+data.result.name+'</h6><hr class="hr-light"><p class="card-text white-text">'+data.result.vicinity+'</p><p>Localização: <a href="">'+data.result.geometry.location.lat +", "+data.result.geometry.location.lng +'</a></p><p style="margin-bottom: 5px";>Estado: <span>'+ (data.result.opening_hours.open_now? 'Aberto': 'Fechado') +'</span></p></div></div>');
 
+	}
 }
