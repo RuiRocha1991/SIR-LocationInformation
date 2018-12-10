@@ -2,7 +2,10 @@ var mymap;
 var marker;
 var popup;
 var pos;
-var places=[];
+var typesSelected=new Array();
+var locationSelected;
+var radius=0;
+var markerPlaces=[];
 
 
 function initMap() {
@@ -32,12 +35,7 @@ function initMap() {
     } else {
       handleLocationError(false);
 	}
-    $("#mapid").css("height","250px");
-    $('#mapid').hover(function(){
-    	$('#mapid').css("height","835px");
-		},function(){
-		    $('#mapid').css("height","250px");
-		});
+	initVariables();
 }
 
 function handleLocationError(browserHasGeolocation) {
@@ -48,7 +46,25 @@ function addMarker(location) {
 	if(marker !== undefined)
 		mymap.removeLayer(marker);
 	getWeather(location);
+
+	/*var marker = new Marker({
+		map: mymap,
+		position: location,
+		icon: {
+			path: SQUARE_PIN,
+			fillColor: '#00CCBB',
+			fillOpacity: 1,
+			strokeColor: '',
+			strokeWeight: 0
+		},
+		map_icon_label: '<span class="map-icon map-icon-point-of-interest"></span>'
+	});*/
+	
+	
+
+	//marker = L.marker(location,{icon: myIcon}).addTo(mymap);
 	marker = L.marker(location).addTo(mymap);
+	locationSelected=location;
 	getPlaces(location);
 }
 
@@ -99,17 +115,24 @@ function getCity(location) {
  }
 
 function getPlaces(location){
-	let type="museum";
-	fetch("php/placesProxy.php?lat="+location.lat+"&lng="+location.lng+"&type="+type)
-		.then(function(resp){
-			return resp.json();
-		})
-		.then(function(data){
-			getDetailsPlaceFromId(data.results);
-		})
-		.catch(function(error){
-			console.log(error.message);
-		})
+	$('#places .card').remove();
+	if(markerPlaces.length>0)
+		removeMarkerPlace();
+	if(typesSelected.length> 0){
+		for(let i=0; i<typesSelected.length;i++){
+			let type=typesSelected[i];
+			fetch("php/placesProxy.php?lat="+location.lat+"&lng="+location.lng+"&type="+type+"&radius="+radius)
+				.then(function(resp){
+					return resp.json();
+				})
+				.then(function(data){
+					getDetailsPlaceFromId(data.results);
+				})
+				.catch(function(error){
+					console.log(error.message);
+				})
+		}
+	}
 }
 
 function getDetailsPlaceFromId(places){
@@ -121,12 +144,16 @@ function getDetailsPlaceFromId(places){
 			dataType: 'json',
 			success: function (data) {
 				fillCardsPlaces(data);
+				$('.cardPlaceDetails').hover(function(){
+					getMarkerSelect($(this).find('#loc').text());
+					});
 			},
 			error: function (errorMessage) {
 				alert(errorMessage);
 			}
 		});
 	}
+	
 }
 
 function getInfoCity(name){ 

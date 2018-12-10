@@ -1,3 +1,40 @@
+ function initVariables(){
+	 
+    $(document).ready(function(){
+		$("#mapid").css("height","250px");
+    	$('#mapid').hover(function(){
+			$('#mapid').css("height","835px");
+			},function(){
+				$('#mapid').css("height","250px");
+		});
+		$('.panel').hover(function(){
+			$(this).find('.icon').addClass('paneHover');
+			},function(){
+				$(this).find('.icon').removeClass('paneHover');
+		});
+
+		$( ".panel" ).click(function() {
+			if( $(this).find('.icon').hasClass('iconHover')){
+				$(this).find('.icon').removeClass('iconHover');
+				typesSelected.splice(typesSelected.indexOf($(this).find('i')[0].id),1);
+				getPlaces(locationSelected);
+			}else{
+				$(this).find('.icon').addClass('iconHover');
+				typesSelected.push($(this).find('i')[0].id);
+				getPlaces(locationSelected);
+			}			
+		});
+		var slider = document.getElementById("controlRadius");
+		document.getElementById('labelRange').innerHTML=slider.value+' meters';
+		radius=slider.value;
+		slider.oninput = function() {
+			document.getElementById('labelRange').innerHTML=this.value+' meters';
+			radius=this.value;
+			getPlaces(locationSelected);
+		}
+	})
+ }
+
  function convertWeatherJsonToDailyJson(data){
 	Date.prototype.addDays = function(days) {
 		var date = new Date(this.valueOf());
@@ -84,7 +121,33 @@ function getCountry(name){
 function fillCardsPlaces(data){
 	if(data.result.photos!==undefined && data.result.opening_hours!==undefined){
 		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
-		$('#places').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails "><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom" style="height:100%"; ><h6 class="card-title teste">'+data.result.name+'</h6><hr class="hr-light"><p class="card-text white-text">'+data.result.vicinity+'</p><p>Localização: <a href="">'+data.result.geometry.location.lat +", "+data.result.geometry.location.lng +'</a></p><p style="margin-bottom: 5px";>Estado: <span>'+ (data.result.opening_hours.open_now? 'Aberto': 'Fechado') +'</span></p></div></div>');
+		if(data.result.opening_hours.open_now){
+			var span='<span class="open">'+ (data.result.opening_hours.open_now? 'Open': 'Close') +'</span>';
+		}else{
+			var span='<span class="closed">'+ (data.result.opening_hours.open_now? 'Open': 'Close') +'</span>';
+		}
+		$('#places').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails "><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom align-bottom"><h6 class="card-title">'+data.result.name+'</h6><hr class="hr-light"><p class="card-text white-text">'+data.result.vicinity+'</p><br><span class="align-bottom">Estado: '+ span+' </span></div> <span id="loc" style="visibility: hidden;" >'+data.result.geometry.location.lat +','+data.result.geometry.location.lng+'</span></div>');
+		addMarkerPlaces(data.result.geometry.location);
+	}
+}
 
+
+function addMarkerPlaces(location) {
+	markerPlaces.push(new L.marker(location));
+	mymap.addLayer(markerPlaces[markerPlaces.length-1]);
+}
+
+function removeMarkerPlace(){
+	for(i=0;i<markerPlaces.length;i++) {
+		mymap.removeLayer(markerPlaces[i]);
+	} 
+}
+
+function getMarkerSelect(location){
+	for(let i=0; i<markerPlaces.length;i++){
+		var loc=markerPlaces[i]._latlng.lat+','+markerPlaces[i]._latlng.lng;
+		if(location==loc){
+			markerPlaces[i]._shadow.height=60;
+		}
 	}
 }
