@@ -1,0 +1,70 @@
+
+.weatherDetailsImg textarea , .cityInformation textarea{
+	margin-top: 8px;
+	margin-bottom: 16px;
+	width: 100%;
+	padding-left: 8px;
+}
+
+input:disabled, textarea:disabled{
+	background:  #fbfbff;
+	border: solid 1px #e5e5e5;
+	border-radius: 3px;
+}
+
+
+.weatherDetails input{
+	padding-left: 8px;
+	margin-top: 8px;
+	margin-bottom: 16px;
+	width: 250px;
+}
+.weatherDetails, .cityInformation hr{
+	margin:0, 10px, 20px,10px;
+}
+
+.cityInformation input{
+	padding-left: 8px;
+	margin-top: 8px;
+	margin-bottom: 16px;
+	width: 442px;
+}
+
+.weatherDetailsImg, .weatherDetailsInfo{
+	background: white;
+}
+.weatherDetailsInfo input{
+	padding-left: 8px;
+	margin-top: 8px;
+	margin-bottom: 16px;
+	width: 250px;
+}
+
+.weatherDetails{
+	background: white;
+}
+
+.weatherDetails, .cityInformation{
+	padding: 16px;	
+	height: 430px;
+	margin:8px 16px;
+	border: solid 1px #b0bec5;
+	border-radius: 5px;
+}
+
+.carousel-control-next-icon {
+	background-image: url(../img/nav_next.png);
+}
+
+.carousel-control-prev-icon {
+	background-image: url(../img/nav_prev.png);
+}
+
+.carousel-content{
+	border: solid 1px #b0bec5;
+	border-radius: 5px;
+}
+
+.row legend{
+	margin-bottom: 0px;
+}

@@ -1,0 +1,13 @@
+#tabContent{
+	background-color: #FFF;
+	position: absolute; ;
+	margin-top: 270px;
+	width: 1208px;
+	border-radius: 5px;
+}
+
+#myTab{
+	background: #e0e8ec;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
