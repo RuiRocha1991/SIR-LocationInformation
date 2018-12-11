@@ -1,4 +1,6 @@
 var mymap;
+var directionsDisplay;
+var directionsService;
 var marker;
 var popup;
 var pos;
@@ -6,35 +8,50 @@ var typesSelected=new Array();
 var locationSelected;
 var radius=0;
 var markerPlaces=[];
-
+var HasDirection=false;
+var GOOGLE_KEY='AIzaSyD3_KAi8uClL6LVrkN7K0PSRxJsWuvplkY';
 
 function initMap() {
-	mymap = L.map('mapid').setView([-104.99404, 39.75621], 40);
-		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', 
-		{ 
-			maxZoom: 18,
-    		id: 'mapbox.streets',
-    		accessToken: 'pk.eyJ1Ijoicm9jaGFydWkiLCJhIjoiY2pveTY0cmh3MjhmdDNra2ZrbXcxcHpiMiJ9.ByPMqT07PUxafU1S_oNlTw'
-		}).addTo(mymap);
-    mymap.locate({setView: true, maxZoom: 8});      
-	mymap.on('click', onMapClick);
-	function onMapClick(e) {
-		addMarker(e.latlng);
-	}
+
+	var myStyles =[
+		{
+			featureType: "poi",
+			elementType: "labels",
+			stylers: [
+				  { visibility: "off" }
+			]
+		}
+	];
+	mymap=new google.maps.Map(document.getElementById('mapid'), {
+		zoom: 12,
+		center:  {lat: -25.363, lng: 131.044},
+		mapTypeId: 'roadmap',
+		styles:myStyles
+	  });
+	directionsService = new google.maps.DirectionsService();
+	directionsDisplay = new google.maps.DirectionsRenderer();
+	directionsDisplay.setMap(mymap);
+	google.maps.event.addListener(mymap, "click", function (event) {
+		addMarker({lat:event.latLng.lat(),lng:event.latLng.lng()});
+		mymap.setCenter({lat:event.latLng.lat(),lng:event.latLng.lng()});
+	});
+	
+
 	geocoder = new google.maps.Geocoder;
-	 if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(function(position){
-	        pos = {
-	        	lat: position.coords.latitude,
-	          	lng: position.coords.longitude          
-	        };
-	        addMarker(pos);
-      	}, function() {
-	        handleLocationError(true);
-	      });
-    } else {
-      handleLocationError(false);
-	}
+	if (navigator.geolocation) {
+	   navigator.geolocation.getCurrentPosition(function(position){
+		   pos = {
+			   	lat: position.coords.latitude,
+				lng: position.coords.longitude          
+		   };
+		   addMarker(pos);
+		   mymap.setCenter(pos);
+		 }, function() {
+		   handleLocationError(true);
+		 });
+   } else {
+	 handleLocationError(false);
+   }
 	initVariables();
 }
 
@@ -44,26 +61,17 @@ function handleLocationError(browserHasGeolocation) {
 
 function addMarker(location) {
 	if(marker !== undefined)
-		mymap.removeLayer(marker);
+		marker.setMap(null);
+
 	getWeather(location);
-
-	/*var marker = new Marker({
-		map: mymap,
+	var image={
+		url:'img/myLocation.png'
+	}
+	marker = new google.maps.Marker({
 		position: location,
-		icon: {
-			path: SQUARE_PIN,
-			fillColor: '#00CCBB',
-			fillOpacity: 1,
-			strokeColor: '',
-			strokeWeight: 0
-		},
-		map_icon_label: '<span class="map-icon map-icon-point-of-interest"></span>'
-	});*/
-	
-	
-
-	//marker = L.marker(location,{icon: myIcon}).addTo(mymap);
-	marker = L.marker(location).addTo(mymap);
+		map: mymap,
+		icon:image
+	  });
 	locationSelected=location;
 	getPlaces(location);
 }
@@ -112,13 +120,17 @@ function getCity(location) {
 	} else 
 	window.alert('Geocoder failed due to: ' + status);
     }); 
- }
+}
 
 function getPlaces(location){
-	$('#places .card').remove();
-	if(markerPlaces.length>0)
+	
+	if(markerPlaces.length>0){
 		removeMarkerPlace();
+		markerPlaces=[];
+	}
 	if(typesSelected.length> 0){
+		$('#places .card').remove();
+		$('#places h1').remove();
 		for(let i=0; i<typesSelected.length;i++){
 			let type=typesSelected[i];
 			fetch("php/placesProxy.php?lat="+location.lat+"&lng="+location.lng+"&type="+type+"&radius="+radius)
@@ -132,6 +144,10 @@ function getPlaces(location){
 					console.log(error.message);
 				})
 		}
+	}else{
+		$('#places h1').remove();
+		$('#places .card').remove();
+		$('#places').append('<h1>Select type of place in settings</h1>');
 	}
 }
 
@@ -144,16 +160,23 @@ function getDetailsPlaceFromId(places){
 			dataType: 'json',
 			success: function (data) {
 				fillCardsPlaces(data);
-				$('.cardPlaceDetails').hover(function(){
-					getMarkerSelect($(this).find('#loc').text());
-					});
+				return data;
 			},
 			error: function (errorMessage) {
 				alert(errorMessage);
 			}
+		}).then(function(data){
+			$('.cardPlaceDetails').hover(function(){
+				getMarkerSelect($(this).data('id'));
+			}, function(){
+				removeHover();
+			});
+
+			$( ".cardPlaceDetails" ).click(function() {
+				getDirectionsFromPosToPlace(data);
+			});
 		});
 	}
-	
 }
 
 function getInfoCity(name){ 
@@ -165,7 +188,7 @@ function getInfoCity(name){
 		dataType: 'jsonp',
 		success: function (data) {
 			$("#cityName").val(city+country);
-		 	$( "#descriptionCity" ).text( data.query.pages[Object.keys(data.query.pages)].extract );
+		 	$("#descriptionCity").text(data.query.pages[Object.keys(data.query.pages)].extract);
 		},
 		error: function (errorMessage) {
 		  alert(errorMessage);
@@ -173,6 +196,24 @@ function getInfoCity(name){
 	});
 }
 
+function getDirectionsFromPosToPlace(place){
+	if(!HasDirection){
+		HasDirection=true;
+		var request = {
+			origin: pos,
+			destination: place.result.geometry.location,
+			travelMode: 'DRIVING'
+		};
+		directionsService.route(request, function(directions, status) {
+		if (status == 'OK') {
+			directionsDisplay.setDirections(directions);
+			launchModal(place, directions);
+			HasDirection=false;
+		}else
+			HasDirection=false;
+		});
+	}
+}
 
 function setInfoResult(data){
 	$("#iconWeather").attr("src","https://darksky.net/images/weather-icons/"+data.currently.icon+".png");

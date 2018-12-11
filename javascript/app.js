@@ -1,5 +1,6 @@
- function initVariables(){
-	 
+var isHover=false;
+var markeTemp;
+function initVariables(){
     $(document).ready(function(){
 		$("#mapid").css("height","250px");
     	$('#mapid').hover(function(){
@@ -121,33 +122,64 @@ function getCountry(name){
 function fillCardsPlaces(data){
 	if(data.result.photos!==undefined && data.result.opening_hours!==undefined){
 		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
+
 		if(data.result.opening_hours.open_now){
 			var span='<span class="open">'+ (data.result.opening_hours.open_now? 'Open': 'Close') +'</span>';
 		}else{
 			var span='<span class="closed">'+ (data.result.opening_hours.open_now? 'Open': 'Close') +'</span>';
 		}
-		$('#places').append('<div class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails "><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom align-bottom"><h6 class="card-title">'+data.result.name+'</h6><hr class="hr-light"><p class="card-text white-text">'+data.result.vicinity+'</p><br><span class="align-bottom">Estado: '+ span+' </span></div> <span id="loc" style="visibility: hidden;" >'+data.result.geometry.location.lat +','+data.result.geometry.location.lng+'</span></div>');
-		addMarkerPlaces(data.result.geometry.location);
+
+		var rating='';
+		for(var i=0; i<Math.round(data.result.rating); i++){
+			rating+='<img src="img/starRating.png"/>';
+		}
+		var levelPrice='';
+		if(data.result.price_level!==undefined){
+			levelPrice='<span style="font-size: 16px;">Price level: '+data.result.price_level +'</span><br>'
+		}
+
+		$('#places').append('<div data-target="#myModal" data-toggle="modal" class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails " data-id='+data.result.place_id+'><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom align-bottom"><h6 class="card-title">'+data.result.name+'</h6><hr class="hr-light"><span class="card-text white-text">'+data.result.vicinity+'</span><br><br><span class="align-bottom">Estado: '+ span+'</span><div style="font-size: 16px; margin-top:16px;>'+levelPrice+'<span style="font-size: 16px;">Rating: </span>'+rating+'</div></div></div>');
+		addMarkerPlaces(data.result.geometry.location, data.result.place_id);
 	}
 }
 
+function addMarkerPlaces(location, id) {
+	var markerPlace=new google.maps.Marker({
+		position: location,
+		map: mymap
+	});
+	markerPlace.set("id", id);
+	markerPlaces.push(markerPlace);
+}
 
-function addMarkerPlaces(location) {
-	markerPlaces.push(new L.marker(location));
-	mymap.addLayer(markerPlaces[markerPlaces.length-1]);
+function setMapOnAll(map) {
+	for (var i = 0; i < markers.length; i++) {
+	  markers[i].setMap(map);
+	}
 }
 
 function removeMarkerPlace(){
 	for(i=0;i<markerPlaces.length;i++) {
-		mymap.removeLayer(markerPlaces[i]);
+		markerPlaces[i].setMap(null);
 	} 
 }
 
-function getMarkerSelect(location){
+function getMarkerSelect(id){
 	for(let i=0; i<markerPlaces.length;i++){
-		var loc=markerPlaces[i]._latlng.lat+','+markerPlaces[i]._latlng.lng;
-		if(location==loc){
-			markerPlaces[i]._shadow.height=60;
+		if(markerPlaces[i].id==id && !isHover){
+			markerPlaces[i].setAnimation(google.maps.Animation.BOUNCE);
+			isHover=true;
+			markeTemp=markerPlaces[i];
 		}
 	}
+}
+
+function removeHover(){
+	isHover=false;
+	markeTemp.setAnimation(null);
+}
+
+function launchModal(place, directions) {
+	$('#myModal .modal-dialog').remove();
+	$('#myModal').append('<div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">'+place.result.name+'</h5><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div class="modal-body"><h6 class="h6Modal"> Origin:</h6><p class="pModal">'+directions.routes[0].legs[0].start_address+'</p><br><h6 class="h6Modal"> Destination:</h6> <p class="pModal">'+directions.routes[0].legs[0].end_address+'</p><br><h6 class="h6Modal"> Distance: </h6><p class="pModal">'+directions.routes[0].legs[0].distance.text+'</p><h6 class="h6Modal"> Duration: </h6><p class="pModal">'+directions.routes[0].legs[0].duration.text+'</p></div><div class="modal-footer"><a  class="btn btn-primary" target="_blank" rel="noopener noreferrer" href="'+place.result.url+'">Link</a><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div></div></div>');
 }

@@ -1,0 +1,8 @@
+#mapid {
+	border-radius: 5px;
+	height: 825px;
+	width: 1208px;
+	position: absolute;
+	z-index: 1;
+	transition: 1.5s all;
+}
