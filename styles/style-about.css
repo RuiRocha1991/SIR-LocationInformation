@@ -1,0 +1,94 @@
+/*  Estrutura do site  */
+
+body, html{
+	margin: 0;
+	font: 16px "Lato", sans-serif;
+	color: #777;
+	height: 100%;
+
+}
+/*   Efeito parallax   */
+
+.box1 , .box2, .box3, .box4, .box5, .box6{
+	position: relative;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	height: 100%;
+	background-attachment: fixed;
+}
+
+.box1{
+	background-image: url(../img/backgroundAbout.jpg);
+}
+
+.box2{
+	background-image: url(../img/backgroundHtml.jpg);
+}
+
+.box3{
+	background-image: url(../img/backgroundBootstrap.png);
+}
+
+.box4{
+	background-image: url(../img/backgroundJquery.png);
+}
+.box5{
+	background-image:url(../img/backgroundIcons.jpg);
+}
+.box6{
+	background-image:url(../img/backgroundAPI.jpg);	
+}
+/*******************/
+
+h3{
+	text-transform: uppercase;
+	color: #111;
+	text-align: center;
+}
+
+p{
+	margin-bottom: 20px;
+}
+.content-title{
+	position: absolute;
+	left: 0;
+	top: 5%;
+	width: 100%;
+	text-align: center;
+}
+
+.content-title span.title{
+	color: #fff;
+	background-color: #111;
+	padding: 18px;
+	font-size: 25px;
+	letter-spacing: 5px;
+	text-transform: uppercase;
+}
+
+
+.contentIcons{
+	margin-top: 1.5%;
+	padding: 8px;
+	widows: 100%;
+}
+
+.contentIcons img{
+	padding: 16px;
+	background:  rgba(255, 255, 255, 0.7);
+	border-radius: 5px;
+	box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.7), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+}
+.conteudo{
+	position: absolute;
+	top: 70%;
+	bottom: 0;
+	color: #777;
+	background-color: white;
+	text-align: justify;
+	padding: 50px 80px;
+}
+
+
+

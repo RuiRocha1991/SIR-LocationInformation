@@ -1,3 +1,8 @@
+.placesEmpty{
+    text-align: center;
+    margin: 8px;
+    padding: 8px;
+}
 #places{
 	height: 510px;
 	white-space: nowrap;

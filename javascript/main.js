@@ -77,7 +77,7 @@ function addMarker(location) {
 }
 
 function  getWeather(location){
-	fetch("php/darkyProxy.php?lat="+location.lat+"&lng="+location.lng)
+	fetch("php/darkSkyProxy.php?lat="+location.lat+"&lng="+location.lng)
 	    .then(function(resp) {
 	        return resp.json();
 	    })
@@ -133,12 +133,15 @@ function getPlaces(location){
 		$('#places h1').remove();
 		for(let i=0; i<typesSelected.length;i++){
 			let type=typesSelected[i];
-			fetch("php/placesProxy.php?lat="+location.lat+"&lng="+location.lng+"&type="+type+"&radius="+radius)
-				.then(function(resp){
-					return resp.json();
+			fetch("php/placesProxy.php?key="+GOOGLE_KEY+"&lat="+location.lat+"&lng="+location.lng+"&type="+type+"&radius="+radius)
+				.then(function(response){
+					return response.text();
+				})
+				.then(function (response){
+					return $.parseXML(response);
 				})
 				.then(function(data){
-					getDetailsPlaceFromId(data.results);
+					getDetailsPlaceFromId(data.getElementsByTagName('result'));
 				})
 				.catch(function(error){
 					console.log(error.message);
@@ -147,7 +150,8 @@ function getPlaces(location){
 	}else{
 		$('#places h1').remove();
 		$('#places .card').remove();
-		$('#places').append('<h1>Select type of place in settings</h1>');
+		$('#places').append('<h1 class="placesEmpty">Select the type of interest in the settings</h1>');
+		
 	}
 }
 
@@ -155,7 +159,7 @@ function getDetailsPlaceFromId(places){
 	$('#places .card').remove();
 	for (let i = 0; i < places.length; i++) {
 		$.ajax({
-			url: 'php/placesIdProxy.php?place='+places[i].place_id,
+			url: 'php/placesIdProxy.php?key='+GOOGLE_KEY+'&place='+places[i].getElementsByTagName('place_id')[0].textContent,
 			method: 'GET',
 			dataType: 'json',
 			success: function (data) {
@@ -215,12 +219,5 @@ function getDirectionsFromPosToPlace(place){
 	}
 }
 
-function setInfoResult(data){
-	$("#iconWeather").attr("src","https://darksky.net/images/weather-icons/"+data.currently.icon+".png");
-	$( "#weatherSummary" ).text(data.currently.summary);
-	$("#temperatureApparent").val(data.currently.apparentTemperature+" ºC");
-	$("#visibility").val(data.currently.visibility+" KM");
-	$("#windGust").val(data.currently.windGust+" KM/h");
-	$("#windSpeed").val(data.currently.windSpeed+" KM/h");
-}
+
 

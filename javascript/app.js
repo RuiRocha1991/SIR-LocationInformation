@@ -1,5 +1,14 @@
 var isHover=false;
 var markeTemp;
+var weekday = new Array(7);
+		weekday[0] =  "Sunday";
+		weekday[1] = "Monday";
+		weekday[2] = "Tuesday";
+		weekday[3] = "Wednesday";
+		weekday[4] = "Thursday";
+		weekday[5] = "Friday";
+		weekday[6] = "Saturday";
+
 function initVariables(){
     $(document).ready(function(){
 		$("#mapid").css("height","250px");
@@ -36,7 +45,16 @@ function initVariables(){
 	})
  }
 
- function convertWeatherJsonToDailyJson(data){
+function setInfoResult(data){
+	$("#iconWeather").attr("src","https://darksky.net/images/weather-icons/"+data.currently.icon+".png");
+	$( "#weatherSummary" ).text(data.currently.summary);
+	$("#temperatureApparent").val(data.currently.apparentTemperature+" ºC");
+	$("#visibility").val(data.currently.visibility+" KM");
+	$("#windGust").val(data.currently.windGust+" KM/h");
+	$("#windSpeed").val(data.currently.windSpeed+" KM/h");
+}
+
+function convertWeatherJsonToDailyJson(data){
 	Date.prototype.addDays = function(days) {
 		var date = new Date(this.valueOf());
 		date.setDate(date.getDate() + days);
@@ -82,14 +100,7 @@ function formatDate(date) {
 	var day = date.getDate();
 	var monthIndex = date.getMonth();
 	var year = date.getFullYear();
-	var weekday = new Array(7);
-		weekday[0] =  "Sunday";
-		weekday[1] = "Monday";
-		weekday[2] = "Tuesday";
-		weekday[3] = "Wednesday";
-		weekday[4] = "Thursday";
-		weekday[5] = "Friday";
-		weekday[6] = "Saturday";
+	
 	return weekday[date.getDay()] +', '+day + '/' + (monthIndex+1) + '/' + year;
 }
 
