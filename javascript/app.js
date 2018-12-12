@@ -1,17 +1,14 @@
 var isHover=false;
 var markeTemp;
-<<<<<<< HEAD
-var weekday = new Array(7);
-		weekday[0] =  "Sunday";
-		weekday[1] = "Monday";
-		weekday[2] = "Tuesday";
-		weekday[3] = "Wednesday";
-		weekday[4] = "Thursday";
-		weekday[5] = "Friday";
-		weekday[6] = "Saturday";
+var weekday = new Array();
+	weekday[0] =  "Sunday";
+	weekday[1] = "Monday";
+	weekday[2] = "Tuesday";
+	weekday[3] = "Wednesday";
+	weekday[4] = "Thursday";
+	weekday[5] = "Friday";
+	weekday[6] = "Saturday";
 
-=======
->>>>>>> 6a72f7a9659d17ecaf4a2d4df0ca0a609e01f23d
 function initVariables(){
     $(document).ready(function(){
 		$("#mapid").css("height","250px");

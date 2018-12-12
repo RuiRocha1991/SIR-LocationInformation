@@ -150,12 +150,7 @@ function getPlaces(location){
 	}else{
 		$('#places h1').remove();
 		$('#places .card').remove();
-<<<<<<< HEAD
 		$('#places').append('<h1 class="placesEmpty">Select the type of interest in the settings</h1>');
-		
-=======
-		$('#places').append('<h1>Select type of place in settings</h1>');
->>>>>>> 6a72f7a9659d17ecaf4a2d4df0ca0a609e01f23d
 	}
 }
 
@@ -221,8 +216,6 @@ function getDirectionsFromPosToPlace(place){
 			HasDirection=false;
 		});
 	}
-<<<<<<< HEAD
-=======
 }
 
 function setInfoResult(data){
@@ -232,7 +225,6 @@ function setInfoResult(data){
 	$("#visibility").val(data.currently.visibility+" KM");
 	$("#windGust").val(data.currently.windGust+" KM/h");
 	$("#windSpeed").val(data.currently.windSpeed+" KM/h");
->>>>>>> 6a72f7a9659d17ecaf4a2d4df0ca0a609e01f23d
 }
 
 
