@@ -1,11 +1,10 @@
-<<<<<<< HEAD
+
 .placesEmpty{
     text-align: center;
     margin: 8px;
     padding: 8px;
 }
-=======
->>>>>>> 6a72f7a9659d17ecaf4a2d4df0ca0a609e01f23d
+
 #places{
 	height: 510px;
 	white-space: nowrap;
