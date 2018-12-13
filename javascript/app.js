@@ -17,6 +17,7 @@ function initVariables(){
 			},function(){
 				$('#mapid').css("height","250px");
 		});
+		
 		$('.panel').hover(function(){
 			$(this).find('.icon').addClass('paneHover');
 			},function(){
@@ -34,11 +35,10 @@ function initVariables(){
 				getPlaces(locationSelected);
 			}			
 		});
-		var slider = document.getElementById("controlRadius");
-		document.getElementById('labelRange').innerHTML=slider.value+' meters';
-		radius=slider.value;
-		slider.oninput = function() {
-			document.getElementById('labelRange').innerHTML=this.value+' meters';
+		document.getElementById('labelRange').innerHTML=(document.getElementById("controlRadius").value /1000)+' Km';
+		radius=document.getElementById("controlRadius").value;
+		document.getElementById("controlRadius").oninput = function() {
+			document.getElementById('labelRange').innerHTML=(this.value /1000)+' Km';
 			radius=this.value;
 			getPlaces(locationSelected);
 		}
@@ -131,6 +131,7 @@ function getCountry(name){
 }
 
 function fillCardsPlaces(data){
+	console.log(data);
 	if(data.result.photos!==undefined && data.result.opening_hours!==undefined){
 		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
 

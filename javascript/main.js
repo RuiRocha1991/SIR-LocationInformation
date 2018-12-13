@@ -218,14 +218,5 @@ function getDirectionsFromPosToPlace(place){
 	}
 }
 
-function setInfoResult(data){
-	$("#iconWeather").attr("src","https://darksky.net/images/weather-icons/"+data.currently.icon+".png");
-	$( "#weatherSummary" ).text(data.currently.summary);
-	$("#temperatureApparent").val(data.currently.apparentTemperature+" ºC");
-	$("#visibility").val(data.currently.visibility+" KM");
-	$("#windGust").val(data.currently.windGust+" KM/h");
-	$("#windSpeed").val(data.currently.windSpeed+" KM/h");
-}
-
 
 
