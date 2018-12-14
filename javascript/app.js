@@ -11,11 +11,11 @@ var weekday = new Array();
 
 function initVariables(){
     $(document).ready(function(){
-		$("#mapid").css("height","250px");
+		$("#mapid").css("height","290px");
     	$('#mapid').hover(function(){
 			$('#mapid').css("height","835px");
 			},function(){
-				$('#mapid').css("height","250px");
+				$('#mapid').css("height","290px");
 		});
 		
 		$('.panel').hover(function(){
@@ -29,10 +29,12 @@ function initVariables(){
 				$(this).find('.icon').removeClass('iconHover');
 				typesSelected.splice(typesSelected.indexOf($(this).find('i')[0].id),1);
 				getPlaces(locationSelected);
+				directionsDisplay.setDirections({routes: []});
 			}else{
 				$(this).find('.icon').addClass('iconHover');
 				typesSelected.push($(this).find('i')[0].id);
 				getPlaces(locationSelected);
+				directionsDisplay.setDirections({routes: []});
 			}			
 		});
 		document.getElementById('labelRange').innerHTML=(document.getElementById("controlRadius").value /1000)+' Km';
@@ -131,7 +133,6 @@ function getCountry(name){
 }
 
 function fillCardsPlaces(data){
-	console.log(data);
 	if(data.result.photos!==undefined && data.result.opening_hours!==undefined){
 		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
 
