@@ -134,7 +134,7 @@ function getCountry(name){
 
 function fillCardsPlaces(data){
 	if(data.result.photos!==undefined && data.result.opening_hours!==undefined){
-		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAPwAin8WQ_Ous1cp9MLAKZW-SAmYHsPpQ';
+		var url='https://maps.googleapis.com/maps/api/place/photo?maxwidth=600&photoreference='+data.result.photos[0].photo_reference+'&sensor=true&key=AIzaSyAUQyipRa-1V_j70iHWrfUjdgJI9m6C860';
 
 		if(data.result.opening_hours.open_now){
 			var span='<span class="open">'+ (data.result.opening_hours.open_now? 'Open': 'Close') +'</span>';
@@ -151,7 +151,7 @@ function fillCardsPlaces(data){
 			levelPrice='<span style="font-size: 16px;">Price level: '+data.result.price_level +'</span><br>'
 		}
 
-		$('#places').append('<div data-target="#myModal" data-toggle="modal" class="card col-3 shadow-lg p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails " data-id='+data.result.place_id+'><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom align-bottom"><h6 class="card-title">'+data.result.name+'</h6><hr class="hr-light"><span class="card-text white-text">'+data.result.vicinity+'</span><br><br><span class="align-bottom">Estado: '+ span+'</span><div style="font-size: 16px; margin-top:16px;>'+levelPrice+'<span style="font-size: 16px;">Rating: </span>'+rating+'</div></div></div>');
+		$('#places').append('<div data-target="#myModal" data-toggle="modal" class="card col-3 shadow-lg  p-3 bg-white rounded m-3 d-inline-block cardPlaceDetails " data-id='+data.result.place_id+'><div class="view overlay"><img class="card-img-top" src="'+url+'" alt="Card image cap" height="150px"></div><div class="card-body elegant-color white-text rounded-bottom align-bottom"><h6 class="card-title">'+data.result.name+'</h6><hr class="hr-light"><span class="card-text white-text">'+data.result.vicinity+'</span><br><br><span class="align-bottom">Estado: '+ span+'</span><div style="font-size: 16px; margin-top:16px;>'+levelPrice+'<span style="font-size: 16px;">Rating: </span>'+rating+'</div></div></div>');
 		addMarkerPlaces(data.result.geometry.location, data.result.place_id);
 	}
 }
