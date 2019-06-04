@@ -9,7 +9,7 @@ var locationSelected;
 var radius=0;
 var markerPlaces=[];
 var HasDirection=false;
-var GOOGLE_KEY='AIzaSyAUQyipRa-1V_j70iHWrfUjdgJI9m6C860';
+var GOOGLE_KEY='';
 
 function initMap() {
 
